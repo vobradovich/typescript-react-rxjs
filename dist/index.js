@@ -55,9 +55,13 @@
 	var React = __webpack_require__(2);
 	var ReactDOM = __webpack_require__(36);
 	var Rx = __webpack_require__(176);
+	var websocket_service_1 = __webpack_require__(178);
 	var source = Rx.Observable.timer(1000, 1000);
-	source.subscribe(function (o) {
-	    ReactDOM.render(React.createElement("div", null, o), document.getElementById('root'));
+	var service = new websocket_service_1.WebSocketService();
+	var socket = service.connect("ws://echo.websocket.org/");
+	source.map(function (i) { return ({ data: i }); }).subscribe(socket);
+	socket.subscribe(function (o) {
+	    ReactDOM.render(React.createElement("div", null, JSON.stringify(o.data)), document.getElementById('root'));
 	});
 
 
@@ -33835,6 +33839,47 @@
 		}
 		return module;
 	}
+
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var Rx = __webpack_require__(176);
+	var WebSocketService = (function () {
+	    function WebSocketService() {
+	    }
+	    WebSocketService.prototype.connect = function (url) {
+	        if (!this.subject) {
+	            this.subject = this.create(url);
+	        }
+	        return this.subject;
+	    };
+	    WebSocketService.prototype.create = function (url) {
+	        var ws = new WebSocket(url);
+	        var observable = Rx.Observable.create(function (obs) {
+	            ws.onmessage = obs.onNext.bind(obs);
+	            ws.onerror = obs.onError.bind(obs);
+	            ws.onclose = obs.onCompleted.bind(obs);
+	            return ws.close.bind(ws);
+	        });
+	        var observer = {
+	            onNext: function (data) {
+	                if (ws.readyState === WebSocket.OPEN) {
+	                    ws.send(JSON.stringify(data.data));
+	                }
+	            },
+	            onError: function (data) {
+	                console.error(data);
+	            },
+	            onCompleted: function () { },
+	        };
+	        return Rx.Subject.create(observer, observable);
+	    };
+	    return WebSocketService;
+	}());
+	exports.WebSocketService = WebSocketService;
 
 
 /***/ }

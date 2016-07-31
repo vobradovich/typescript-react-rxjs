@@ -1,26 +1,26 @@
 {
-    "name": "typescript-react-rxjs",
-    "version": "1.0.0",
-    "description": "Minimal boilerplate",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "webpack-dev-server --port 888"
-    },
-    "author": "Vadim Obradovich",
-    "license": "MIT",
-    "dependencies": {
-        "react": "^15.3.0",
-        "react-dom": "^15.3.0",
-        "rx": "^4.1.0"
-    },
-    "devDependencies": {
-        "extract-text-webpack-plugin": "^1.0.1",
-        "html-webpack-plugin": "^2.22.0",
-        "ts-loader": "~0.8.2",
-        "typescript": "~2.0.0",
-        "typings": "^1.3.2",
-        "url-loader": "^0.5.7",
-        "webpack": "^1.13.1",
-        "webpack-dev-server": "^1.14.1"
-    }
+  "name": "typescript-react-rxjs",
+  "version": "1.0.0",
+  "description": "Minimal boilerplate",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --port 888"
+  },
+  "author": "Vadim Obradovich",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^15.3.0",
+    "react-dom": "^15.3.0",
+    "rx": "^4.1.0"
+  },
+  "devDependencies": {
+    "extract-text-webpack-plugin": "^1.0.1",
+    "html-webpack-plugin": "^2.22.0",
+    "ts-loader": "~0.8.2",
+    "typescript": "~2.0.0",
+    "typings": "^1.3.2",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  }
 }
