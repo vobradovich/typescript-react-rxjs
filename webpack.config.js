@@ -15,7 +15,7 @@ module.exports = {
   },
 
   entry: [
-    './index.tsx'
+        './index.tsx'
   ],
 
   output: {
@@ -28,18 +28,18 @@ module.exports = {
     contentBase: './dist', //Content base
     inline: true, //Enable watch and live reload
     host: 'localhost',
-    port: 8080
+    port: 888
   },
 
   // http://webpack.github.io/docs/configuration.html#devtool
   devtool: 'source-map',
 
   module: {
-		loaders: [
+        loaders: [
       {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        loader: 'ts-loader'
+        loaders: ['ts-loader']
       },
       //Note: Doesn't exclude node_modules to load bootstrap
       {
@@ -52,17 +52,19 @@ module.exports = {
       {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
       {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
       {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" }
-		]
-	},
+        ]
+    },
 
   plugins:[
+    //new webpack.HotModuleReplacementPlugin(),
+    //new webpack.NoErrorsPlugin(),
     //Generate index.html in /dist => https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       filename: 'index.html', //Name of file in ./dist/
       template: 'index.html' //Name of template in ./src
     }),
     //Generate bundle.css => https://github.com/webpack/extract-text-webpack-plugin
-    new ExtractTextPlugin('bundle.css'),
+    // new ExtractTextPlugin('bundle.css'),
     //Expose jquery used by bootstrap
     new webpack.ProvidePlugin({
       $: "jquery",
