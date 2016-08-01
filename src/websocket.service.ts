@@ -1,6 +1,6 @@
 /// <reference path="../typings/index.d.ts" />
 
-import * as Rx from 'rx';
+import * as Rx from 'rxjs';
 
 export class WebSocketService {
     private subject: Rx.Subject<MessageEvent>;
@@ -16,23 +16,23 @@ export class WebSocketService {
         let ws = new WebSocket(url);
 
         let observable = Rx.Observable.create((obs: Rx.Observer<MessageEvent>) => {
-            ws.onmessage = obs.onNext.bind(obs);
-            ws.onerror = obs.onError.bind(obs);
-            ws.onclose = obs.onCompleted.bind(obs);
+            ws.onmessage = obs.next.bind(obs);
+            ws.onerror = obs.error.bind(obs);
+            ws.onclose = obs.complete.bind(obs);
 
             return ws.close.bind(ws);
         });
 
-        let observer: Rx.IObserver<MessageEvent> = {
-            onNext: (data: MessageEvent) => {
+        let observer = {
+            next: (data: MessageEvent) => {
                 if (ws.readyState === WebSocket.OPEN) {
                     ws.send(JSON.stringify(data.data));
                 }
             },
-            onError: (data: MessageEvent) => {
+            error: (data: MessageEvent) => {
                 console.error(data);
             },
-            onCompleted: () => { },
+            complete: () => { },
         };
 
         return Rx.Subject.create(observer, observable);

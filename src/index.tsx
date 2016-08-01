@@ -2,16 +2,14 @@
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import * as Rx from "rx";
-import { WebSocketService } from "./websocket.service";
+import * as Rx from 'rxjs';
 
 var source = Rx.Observable.timer(1000, 1000);
 
-var service = new WebSocketService();
-var socket = service.connect("ws://echo.websocket.org/");
+var socket = Rx.Observable.webSocket("ws://echo.websocket.org/");
 
-source.map(i => ({ data: i })).subscribe(socket);
+source.subscribe(socket);
 
 socket.subscribe(o => {
-    ReactDOM.render(<div>{JSON.stringify(o.data) }</div>, document.getElementById('root'));
+    ReactDOM.render(<div>{JSON.stringify(o) }</div>, document.getElementById('root'));
 });
